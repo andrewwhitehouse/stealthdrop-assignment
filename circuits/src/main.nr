@@ -14,6 +14,8 @@ fn main(
   let key = ecrecover::secp256k1::PubKey::from_unified(pub_key);
   let address = ecrecover::ecrecover(key.pub_x, key.pub_y, signature, hashed_message);
   std::println(f"address {address}");
+  assert(evaluate_polynomial(polynomial, address) == 0);
+  assert(std::hash::blake2s(signature) == nullifier);
 }
 
 fn evaluate_polynomial(polynomial: [Field; CANDIDATES + 1], x: Field) -> Field {
