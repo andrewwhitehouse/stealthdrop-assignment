@@ -19,25 +19,15 @@ fn main(
   // I'm currently stuck on how to verify the polynomial commitment
 }
 
-/*
-
-Steps to use polynomial commitments in ZKP circuits:
-
-    * Create a polynomial with the hash of values to include
-
-    * Hash the polynomial. This hash can be a public input to the circuit
-
-    * In the circuit, check that the user knows a secret value which hashes to an included value in polynomial. This can be done by hashing the input value and asserting the evaluation of the polynomial at that hashed value to be zero
-
-    * Check that the hash of the polynomial is the same as the public polynomial hash provided
-*/
-
 fn evaluate_polynomial(polynomial: [Field; CANDIDATES + 1], x: Field) -> Field {
-  let mut product = 1;
-  for p in polynomial {
-    product = product * (x-p);
-  }  
-  product
+
+  let mut mulitiplication = 1;
+  let mut addition = 0;
+  for i in 0..polynomial.len(){
+    addition = addition + mulitiplication * polynomial[i];
+    mulitiplication = mulitiplication*x;
+  }
+  addition
 }
 
 #[test]
